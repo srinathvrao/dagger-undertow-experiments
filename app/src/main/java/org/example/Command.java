@@ -8,21 +8,27 @@ interface Command {
 
     static final class Result {
         private final Status status;
+        private final String output;
 
-        private Result(Status status) {
+        private Result(Status status, String res) {
             this.status = status;
+            this.output = res;
         }
 
-        static Result invalid() {
-            return new Result(Status.INVALID);
+        static Result invalid(String error) {
+            return new Result(Status.INVALID, error);
         }
 
-        static Result handled() {
-            return new Result(Status.HANDLED);
+        static Result handled(String output) {
+            return new Result(Status.HANDLED, output);
         }
 
         Status status(){
             return status;
+        }
+
+        String output() {
+            return output;
         }
 
         enum Status {

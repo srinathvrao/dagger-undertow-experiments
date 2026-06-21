@@ -1,6 +1,21 @@
 package org.example;
 import javax.inject.Inject;
+
+import dagger.Binds;
+import dagger.Module;
+import dagger.multibindings.IntoMap;
+import dagger.multibindings.StringKey;
+
 import java.util.List;
+
+@Module
+abstract class HelloWorldModule {
+
+  @Binds
+  @IntoMap
+  @StringKey("hello")
+  abstract Command helloWorldCommand(HelloWorldCommand command);
+}
 
 final class HelloWorldCommand implements Command {
   @Inject
@@ -14,9 +29,8 @@ final class HelloWorldCommand implements Command {
   @Override
   public Result handleInput(List<String> input) {
     if (!input.isEmpty()) {
-      return Result.invalid();
+      return Result.invalid("hello command does not accept args");
     }
-    System.out.println("world!");
-    return Result.handled();
+    return Result.handled("world!");
   }
 }
