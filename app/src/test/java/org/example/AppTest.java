@@ -6,10 +6,14 @@ package org.example;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.example.Command.Result;
+
 class AppTest {
     @Test void cmdRouterWorks() {
         App classUnderTest = new App();
-        CommandRouter cmdRouter = new CommandRouter();
-        assertNotNull(classUnderTest.callCommandRouter(cmdRouter, "hello"), "command router should work");
+        CommandRouterFactory cmdRouterFactory = DaggerCommandRouterFactory.create();
+        CommandRouter commandRouter = cmdRouterFactory.router();
+        assertNotEquals(commandRouter.route("add 2 3"), Result.invalid());
+        assertNotEquals(commandRouter.route("hello"), Result.invalid());
     }
 }
