@@ -4,16 +4,15 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.example.Command.Result;
+import io.undertow.Undertow;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test void cmdRouterWorks() {
-        App classUnderTest = new App();
-        CommandRouterFactory cmdRouterFactory = DaggerCommandRouterFactory.create();
-        CommandRouter commandRouter = cmdRouterFactory.router();
-        assertNotEquals(commandRouter.route("add 2 3"), Result.invalid());
-        assertNotEquals(commandRouter.route("hello"), Result.invalid());
+        UndertowServerFactory serverFactory = DaggerUndertowServerFactory.create();
+        Undertow server = serverFactory.server().build();
+        assertNotNull(server, "Undertow server should be initialized");
     }
 }

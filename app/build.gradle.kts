@@ -22,6 +22,8 @@ dependencies {
     implementation(libs.guava)
     implementation("com.google.dagger:dagger:2.59.2")
     annotationProcessor("com.google.dagger:dagger-compiler:2.59.2")
+    // Source: https://mvnrepository.com/artifact/io.undertow/undertow-core
+    implementation("io.undertow:undertow-core:2.4.1.Final")
 }
 
 testing {

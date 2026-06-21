@@ -13,12 +13,11 @@ import org.example.Command.Result.Status;
 
 final class CommandRouter {
 
-    private final Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands;
 
     @Inject
-    CommandRouter(AddCommand addCmd, HelloWorldCommand hwCmd) {
-        commands.put(addCmd.key(), addCmd);
-        commands.put(hwCmd.key(), hwCmd);
+    CommandRouter(Map<String, Command> commands) {
+        this.commands = commands;
     }
 
     Result route(String input) {
@@ -40,13 +39,12 @@ final class CommandRouter {
     }
 
     private Result invalidCommand(String input) {
-        System.out.println(
-            String.format(
+        String error = String.format(
                 "Could not understand \"%s\". Please try again.",
                 input
-            )
-        );
-        return Result.invalid();
+            );
+        System.out.println(error);
+        return Result.invalid(error);
     }
 
     private static List<String> split(String input) {
